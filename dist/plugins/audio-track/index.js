@@ -95,6 +95,8 @@
     };
 
     _proto.onAlternateAudio = function onAlternateAudio() {
+      var _this2 = this;
+
       var audioTracks = this.player_.audio().values();
       var audioEntries = audioTracks.map(function (track, index) {
         var id = track.id,
@@ -103,7 +105,7 @@
             language = track.language; // label and value are necessary attributes
 
         return {
-          label: label,
+          label: _this2.localize(label),
           value: index,
           id: id,
           kind: kind,
@@ -119,12 +121,12 @@
     };
 
     _proto.handleAudioChangeEvent = function handleAudioChangeEvent() {
-      var _this2 = this;
+      var _this3 = this;
 
       var audioTracks = this.player_.audio().values();
       var currentEntry = audioTracks.reduce(function (acc, track, index) {
         if (track.enabled) {
-          acc = _this2.entries[index];
+          acc = _this3.entries[index];
         }
 
         return acc;

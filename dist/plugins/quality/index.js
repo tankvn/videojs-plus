@@ -200,7 +200,7 @@
 
     if (qualities && qualities.length) {
       var defaultQualityLevel = qualities.findIndex(function (v) {
-        return v.default;
+        return v["default"];
       });
       vjsPlayer.setQualities(qualities, defaultQualityLevel);
     }

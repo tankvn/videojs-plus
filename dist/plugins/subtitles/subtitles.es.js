@@ -51,7 +51,7 @@ function (_SettingOptionItem) {
       }), [{
         label: 'Close Subtitles',
         value: -1,
-        default: false
+        "default": false
       }]));
 
       _this.show();
@@ -157,17 +157,17 @@ function (_videojs$getPlugin) {
       this.remove();
       subtitles.forEach(function (subtitle) {
         if (_this2.flag) {
-          subtitle.default = _this2.flag === subtitle.label || -1;
+          subtitle["default"] = _this2.flag === subtitle.label || -1;
         }
 
         var manualCleanup = true; // set default to false, otherwise subtitle will reset to the default subtitle
         // when user switch quality with quality plugin
 
         var trackEl = player.addRemoteTextTrack(_extends({}, subtitle, {
-          default: false
+          "default": false
         }), manualCleanup);
 
-        if (subtitle.default) {
+        if (subtitle["default"]) {
           _this2.flag = subtitle.label;
           _this2.track = trackEl.track;
           trackEl.track.mode = 'showing';

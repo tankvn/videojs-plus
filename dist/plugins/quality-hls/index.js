@@ -98,16 +98,17 @@
         return {
           label: _this3.localize(height + "p"),
           value: height,
-          default: false
+          "default": false
         };
       }).sort(function (a, b) {
         return b.value - a.value;
       }), [{
         label: 'Auto',
         value: 'auto',
-        default: true
-      }]);
-      this.setEntries(entries);
+        "default": true
+      }]); // use auto as default
+
+      this.setEntries(entries, entries.length - 1);
       this.show();
       this.player_.trigger('qualities', this.levels);
     };
@@ -129,7 +130,7 @@
           }) || {};
           acc = _extends({
             index: index
-          }, entry, level);
+          }, entry, {}, level);
         }
 
         return acc;

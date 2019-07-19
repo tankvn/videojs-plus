@@ -189,7 +189,7 @@ function (_videojs$getPlugin) {
     });
     document.body.appendChild(videoEl);
 
-    var pipPlayerOptions = _extends({}, parentPlayer.options_, parentPlayer.cache_, {
+    var pipPlayerOptions = _extends({}, parentPlayer.options_, {}, parentPlayer.cache_, {
       autoplay: true,
       muted: parentPlayer.muted()
     });
@@ -199,7 +199,7 @@ function (_videojs$getPlugin) {
       parentPlayer: parentPlayer
     }));
     this.dragzone = pipPlayer.getChild('PlayToggleLayer');
-    this.updatePosition(_extends({}, this.cache_, options_));
+    this.updatePosition(_extends({}, this.cache_, {}, options_));
     pipPlayer.ready(function () {
       pipPlayer.currentTime(parentPlayer.currentTime());
       pipPlayer.play();

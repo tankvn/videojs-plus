@@ -528,7 +528,7 @@
 
     if (playlist && playlist.length) {
       var startIndex = playlist.findIndex(function (v) {
-        return v.default;
+        return v["default"];
       });
       vjsPlayer.setPlayList(playlist, startIndex);
     }

@@ -46,6 +46,13 @@
       } else {
         this.player_.exitFullscreen();
       }
+    } // Since `FullWindowToggle` are extends from `FullscreenToggle`,
+    // disable function will be called if the browser does not support fullscreen API
+    // However, `FullWindowToggle`  is assumed support all platform. So the function should be override
+    ;
+
+    _proto.disable = function disable(force) {
+      force && _videojs$getComponent.prototype.disable.call(this);
     };
 
     return FullWindowToggle;

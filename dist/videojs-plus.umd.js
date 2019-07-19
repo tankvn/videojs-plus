@@ -833,14 +833,14 @@
 
       var isDefault = false;
 
-      if (typeof selectedIndex === 'undefined' && typeof data.default !== 'undefined') {
+      if (typeof selectedIndex === 'undefined' && typeof data["default"] !== 'undefined') {
         isDefault = true;
         selectedIndex = index;
       }
 
       return _extends({}, data, {
         index: index,
-        default: isDefault
+        "default": isDefault
       });
     });
     return {
@@ -970,7 +970,7 @@
         entries: [0.5, 0.75, {
           label: 'Normal',
           value: 1,
-          default: true
+          "default": true
         }, 1.25, 1.5, 2]
       })) || this;
 

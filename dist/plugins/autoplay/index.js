@@ -62,7 +62,7 @@
       var handlePlay = player.play();
 
       if (handlePlay) {
-        handlePlay.then(resolved).catch(function (err) {
+        handlePlay.then(resolved)["catch"](function (err) {
           log('Seems autoplay is not allowed even player is muted', err);
           player.trigger(AUTOPLAY_FAILURE);
           player.hasStarted(false);
@@ -80,7 +80,7 @@
         var playPromise = player.play();
 
         if (playPromise !== undefined && playPromise !== null) {
-          playPromise.then(resolved).catch(rejected);
+          playPromise.then(resolved)["catch"](rejected);
         } else {
           log('Browser not support play promise');
           setTimeout(callback, 1000);
