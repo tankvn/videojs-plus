@@ -1,3 +1,4 @@
+/* eslint-disable */
 import videojs from 'video.js';
 
 function findChild(parent, name, result) {
@@ -289,25 +290,6 @@ var playerChildren = videojs.getComponent('Player').prototype.options_.children;
 var loadSpinnerIndex = playerChildren.indexOf('loadingSpinner');
 playerChildren.splice(loadSpinnerIndex, 0, 'PlayToggleLayer');
 
-var addEventListener = (function (events, listener, target) {
-  if (target === void 0) {
-    target = window;
-  }
-
-  if (!Array.isArray(events)) {
-    events = [events];
-  }
-
-  events.forEach(function (evt) {
-    return target.addEventListener(evt, listener);
-  });
-  return function () {
-    return events.forEach(function (evt) {
-      return target.removeEventListener(evt, listener);
-    });
-  };
-});
-
 var MenuItem = videojs.getComponent('MenuItem');
 
 var ContextMenuItem =
@@ -461,10 +443,6 @@ function (_Menu) {
     _this.hide();
 
     _this.player_.on('contextmenu', _this.onContextmenu.bind(_assertThisInitialized(_this)));
-
-    var unbindWindowClickAction = addEventListener('click', _this.handleClick.bind(_assertThisInitialized(_this)));
-
-    _this.on('dispose', unbindWindowClickAction);
 
     return _this;
   }

@@ -1,3 +1,4 @@
+/* eslint-disable */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('video.js')) :
   typeof define === 'function' && define.amd ? define(['video.js'], factory) :
@@ -106,11 +107,16 @@
         label: 'Auto',
         value: 'auto',
         "default": true
-      }]); // use auto as default
+      }]);
 
-      this.setEntries(entries, entries.length - 1);
-      this.show();
-      this.player_.trigger('qualities', this.levels);
+      if (this.levels.length > 1) {
+        // use auto as default
+        this.setEntries(entries, entries.length - 1);
+        this.show();
+        this.player_.trigger('qualities', this.levels);
+      } else {
+        this.hide();
+      }
     };
 
     _proto.onChange = function onChange(selected) {

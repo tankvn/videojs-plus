@@ -1,3 +1,4 @@
+/* eslint-disable */
 import videojs from 'video.js';
 
 function _extends() {
@@ -100,11 +101,16 @@ function (_SettingOptionItem) {
       label: 'Auto',
       value: 'auto',
       "default": true
-    }]); // use auto as default
+    }]);
 
-    this.setEntries(entries, entries.length - 1);
-    this.show();
-    this.player_.trigger('qualities', this.levels);
+    if (this.levels.length > 1) {
+      // use auto as default
+      this.setEntries(entries, entries.length - 1);
+      this.show();
+      this.player_.trigger('qualities', this.levels);
+    } else {
+      this.hide();
+    }
   };
 
   _proto.onChange = function onChange(selected) {

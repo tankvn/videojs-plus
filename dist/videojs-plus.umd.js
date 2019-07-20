@@ -1,3 +1,4 @@
+/* eslint-disable */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('video.js')) :
   typeof define === 'function' && define.amd ? define(['video.js'], factory) :
@@ -295,25 +296,6 @@
   var loadSpinnerIndex = playerChildren.indexOf('loadingSpinner');
   playerChildren.splice(loadSpinnerIndex, 0, 'PlayToggleLayer');
 
-  var addEventListener = (function (events, listener, target) {
-    if (target === void 0) {
-      target = window;
-    }
-
-    if (!Array.isArray(events)) {
-      events = [events];
-    }
-
-    events.forEach(function (evt) {
-      return target.addEventListener(evt, listener);
-    });
-    return function () {
-      return events.forEach(function (evt) {
-        return target.removeEventListener(evt, listener);
-      });
-    };
-  });
-
   var MenuItem = videojs.getComponent('MenuItem');
 
   var ContextMenuItem =
@@ -467,10 +449,6 @@
       _this.hide();
 
       _this.player_.on('contextmenu', _this.onContextmenu.bind(_assertThisInitialized(_this)));
-
-      var unbindWindowClickAction = addEventListener('click', _this.handleClick.bind(_assertThisInitialized(_this)));
-
-      _this.on('dispose', unbindWindowClickAction);
 
       return _this;
     }
