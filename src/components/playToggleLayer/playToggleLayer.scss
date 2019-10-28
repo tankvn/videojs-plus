@@ -1,0 +1,8 @@
+@import '../../scss/index.scss';
+
+.vjs-play-toggle-layer {
+  @include absolute(0, null, 0);
+  @include sq-dimen(100%);
+  outline: none;
+  cursor: pointer;
+}

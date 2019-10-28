@@ -1,0 +1,26 @@
+@import '../../scss/index.scss';
+
+.vjs-title {
+  @include animate(opacity);
+  @include dimen(100%);
+  @include relative();
+
+  background-image: linear-gradient(to top, rgba(23, 23, 23, 0) 0, rgba(0, 0, 0, 0.4) 100%);
+  color: #fff;
+  overflow: hidden;
+  opacity: 1;
+  padding: 0 15px 5px 15px;
+  visibility: visible;
+  .vjs-title-field {
+    @include dimen(100%, $control-bar-height);
+    @include text-overflow-ellipsis();
+    line-height: $control-bar-height;
+  }
+}
+
+.vjs-user-inactive.vjs-playing {
+  .vjs-title {
+    visibility: hidden;
+    opacity: 0;
+  }
+}

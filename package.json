@@ -119,6 +119,7 @@
   },
   "dependencies": {
     "@types/video.js": "^7.3.1",
-    "video.js": "^7.6.5"
+    "video.js": "^7.6.5",
+    "videojs-font": "https://github.com/Pong420/font.git"
   }
 }

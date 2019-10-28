@@ -78,8 +78,3 @@
   border-bottom: 0.15em solid;
   transform: rotate(45deg);
 }
-
-@mixin square($size) {
-  width: $size;
-  height: $size;
-}

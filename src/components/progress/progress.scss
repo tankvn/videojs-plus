@@ -1,0 +1,102 @@
+@import '../../scss/index.scss';
+
+$barHeight: 0.2em;
+$barHeightHover: 0.32em;
+$dotSize: $barHeightHover * 3;
+$bg1: rgba(255, 255, 255, 0.4);
+$bg2: rgba(255, 255, 255, 0.6);
+$bg3: rgba(255, 255, 255, 1);
+
+.vjs-progress-control {
+  &.vjs-progress-control {
+    &.vjs-progress-control {
+      @include absolute(null, calc(#{$control-bar-height} - #{$barHeightHover}), 0, 0);
+    }
+  }
+  cursor: pointer;
+  margin: auto;
+  width: calc(100% - #{$control-bar-horizontal-padding * 2});
+
+  .vjs-progress-holder {
+    @include relative();
+    @include dimen(100%, $dotSize);
+
+    outline: 0;
+
+    &:before,
+    > div {
+      @include absolute();
+      height: $barHeight;
+      margin: #{($dotSize - $barHeightHover) / 2} auto;
+    }
+    &:before {
+      @include dimen(100%);
+      content: '';
+      display: block;
+      background-color: $bg1;
+    }
+    .vjs-load-progress {
+      background-color: $bg2;
+    }
+    .vjs-play-progress {
+      background-color: $bg3;
+    }
+    .vjs-play-progress {
+      &:before {
+        @include absolute(-($dotSize - $barHeightHover) / 2, null, null, -$dotSize/2);
+        font-size: $dotSize;
+        line-height: 1em;
+        opacity: 0;
+        z-index: 1;
+      }
+    }
+  }
+  .vjs-time-tooltip {
+    @include absolute(-2.5em);
+
+    display: none;
+    font-size: 0.85em;
+    line-height: 1em;
+    padding: 0.5em 0.7em;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+  }
+}
+
+@mixin showDotOnProgressBar {
+  .vjs-play-progress:before {
+    opacity: 1;
+  }
+}
+
+@mixin extendProgressBar {
+  &:before,
+  > div {
+    height: $barHeightHover;
+  }
+}
+
+.vjs-workinghover {
+  .vjs-progress-control {
+    &:hover {
+      @include showDotOnProgressBar();
+      .vjs-progress-holder {
+        @include extendProgressBar();
+      }
+    }
+    &:hover .vjs-mouse-display {
+      .vjs-time-tooltip {
+        display: block;
+      }
+    }
+  }
+}
+
+.vjs-progress-control {
+  .vjs-sliding {
+    @include showDotOnProgressBar();
+    &.vjs-progress-holder {
+      @include extendProgressBar();
+    }
+  }
+}

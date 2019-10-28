@@ -1,0 +1,251 @@
+@import '../../scss/index.scss';
+
+.vjs-control-bar {
+  @include animate(opacity);
+  @include absolute(null, 0);
+  @include dimen(100%, auto);
+  @include flex();
+  @include padding-x($control-bar-horizontal-padding);
+
+  visibility: visible;
+  background-image: linear-gradient(to bottom, rgba(23, 23, 23, 0) 0%, rgba(0, 0, 0, 0.4) 100%);
+  opacity: 1;
+  padding-top: 10px;
+
+  * {
+    color: #fff;
+  }
+
+  button {
+    font-size: inherit;
+  }
+
+  .vjs-control-separator {
+    @include flex();
+
+    .vjs-volume-panel,
+    .vjs-volume-panel button,
+    > .vjs-button {
+      text-align: center;
+      min-width: 2.25em;
+    }
+
+    &.middle {
+      .vjs-spacer {
+        display: none;
+      }
+    }
+
+    &.bottom {
+      width: 100%;
+      align-items: center;
+    }
+  }
+
+  button {
+    outline: none;
+    border: 0;
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .vjs-icon-placeholder {
+    font-size: 1.375em;
+    line-height: $control-bar-button-height;
+  }
+}
+
+#{$control-bar-hidden} {
+  .vjs-control-bar {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+.vjs-controls-disabled {
+  .vjs-control-bar {
+    display: none;
+  }
+}
+
+.vjs-big-play-button {
+  @include absolute(0, 0, 0, 0);
+  @include sq-dimen(1em);
+
+  outline: none;
+  display: none;
+  position: absolute;
+  margin: auto;
+  font-size: 5em;
+  line-height: 1em;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  color: #fff;
+  cursor: pointer;
+  filter: drop-shadow(1px 1px 10px #333);
+}
+
+.vjs-time-control {
+  font-size: 0.85em;
+  line-height: $control-bar-button-height;
+  &.vjs-time-divider {
+    min-width: 1em;
+    text-align: center;
+  }
+}
+
+.vjs-workinghover {
+  .vjs-control {
+    &.vjs-time-control {
+      .vjs-control-text {
+        display: none;
+      }
+    }
+  }
+
+  .vjs-control,
+  .vjs-menu-button-popup {
+    position: relative;
+    > .vjs-control-text {
+      @include sq-dimen(auto);
+
+      display: table;
+      clip: auto;
+      overflow: visible;
+      font-size: $smaller-font-size;
+      top: calc(-1.5em - 25px);
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.3s opacity;
+      background: #000;
+      padding: 7px 10px;
+      white-space: nowrap;
+      border-radius: 3px;
+      @include floating-black-transparent-background();
+    }
+    &:hover {
+      > .vjs-control-text {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+  }
+  .vjs-control-separator {
+    > .vjs-control:not(:last-child):not(:first-child),
+    > div > .vjs-control,
+    .vjs-menu-button-popup {
+      .vjs-control-text {
+        margin-left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+    &.middle {
+      > * {
+        &:last-child {
+          .vjs-control-text {
+            margin-left: 50%;
+            transform: translateX(-50%);
+          }
+        }
+      }
+    }
+    &.bottom {
+      > * {
+        &:last-child:not(:first-child) {
+          .vjs-control-text {
+            right: 0;
+          }
+        }
+      }
+    }
+  }
+
+  &.vjs-mobile-view {
+    .vjs-control-separator {
+      > * {
+        &:first-child {
+          .vjs-control-text {
+            left: 0;
+            margin-left: auto;
+            transform: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+$volLevelWidth: 3em;
+$barHeight: 0.1875em;
+$transition-duration: 0.3s;
+$dotSize: 0.8125em;
+
+.video-js .vjs-volume-panel {
+  transition: min-width #{$transition-duration};
+  margin-right: 5px;
+
+  .vjs-volume-control {
+    @include dimen(1px, $control-bar-height);
+    opacity: 0;
+    margin-left: -1px;
+    transition: width #{$transition-duration}, opacity #{$transition-duration};
+  }
+
+  &:hover .vjs-volume-control,
+  &:active .vjs-volume-control,
+  &:focus .vjs-volume-control,
+  & .vjs-volume-control:hover,
+  & .vjs-volume-control:active,
+  & .vjs-mute-control:hover ~ .vjs-volume-control,
+  & .vjs-volume-control.vjs-slider-active {
+    @include relative();
+    visibility: visible;
+    opacity: 1;
+
+    &.vjs-volume-horizontal {
+      width: $volLevelWidth;
+      margin-right: 10px;
+    }
+  }
+
+  &.vjs-volume-panel-horizontal {
+    &:hover,
+    &:active,
+    &.vjs-slider-active {
+      min-width: calc(#{$control-bar-button-width} + #{$volLevelWidth});
+      margin-right: #{($dotSize - $barHeight) / 2};
+    }
+  }
+
+  .vjs-mute-control,
+  .vjs-volume-control {
+    float: left;
+  }
+
+  .vjs-volume-level {
+    @include absolute(0, 0, 0);
+    @include dimen(100%, $barHeight);
+    background: rgb(255, 255, 255);
+    margin: auto;
+    text-align: right;
+    &:before {
+      @include absolute(#{($barHeight - $dotSize) / 2}, null, null, $dotSize / -2);
+      font-size: $dotSize;
+    }
+  }
+
+  .vjs-volume-bar {
+    @include relative();
+    height: 100%;
+    &:before {
+      @include absolute(0, 0, 0);
+      @include dimen(100%, $barHeight);
+      content: '';
+      margin: auto;
+      background-color: rgba(255, 255, 255, 0.6);
+    }
+  }
+}

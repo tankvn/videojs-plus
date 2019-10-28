@@ -5,8 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
+    <link rel="stylesheet" href="./videojs-plus.css" />
   </head>
-  <body></body>
+  <body>
+    <video id="example-video" class="vjs-fluid" poster="https://vjs.zencdn.net/v/oceans.png">
+      <source src="https://vjs.zencdn.net/v/oceans.mp4" />
+    </video>
+  </body>
   <script src="//vjs.zencdn.net/7.3.0/video.min.js"></script>
   <script src="./videojs-plus.umd.js"></script>
+  <script>
+    var player = videojs('example-video', {
+      // same as videojs config
+      aspectRatio: '16:9'
+    });
+  </script>
 </html>

@@ -6,8 +6,6 @@ import typescript from 'rollup-plugin-typescript2';
 import json from 'rollup-plugin-json';
 import serve from 'rollup-plugin-serve';
 import sass from 'rollup-plugin-sass';
-import autoprefixer from 'autoprefixer';
-import postcss from 'postcss';
 
 const pkg = require('./package.json');
 
@@ -56,11 +54,11 @@ export default {
 
     sass({
       output: `dist/${libraryName}.css`,
-      data: `@import './scss/index.scss';`,
-      processor: css =>
-        postcss([autoprefixer])
-          .process(css)
-          .then(result => result.css)
+      data: `@import './scss/index.scss';`
+      // processor: css =>
+      //   postcss([autoprefixer])
+      //     .process(css)
+      //     .then(result => result.css)
     }),
 
     serve({

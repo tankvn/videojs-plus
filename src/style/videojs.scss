@@ -1,0 +1,123 @@
+@import '../scss/index.scss';
+
+.video-js:-moz-full-screen {
+  @include absolute();
+}
+
+.video-js:-webkit-full-screen {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.video-js[tabindex='-1'] {
+  outline: none;
+}
+
+.video-js ul {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  list-style-position: outside;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0;
+  outline: 0;
+}
+
+.video-js.vjs-fluid,
+.video-js.vjs-16-9,
+.video-js.vjs-4-3 {
+  width: 100%;
+  max-width: 100%;
+  height: 0;
+}
+
+.video-js.vjs-16-9 {
+  padding-top: 56.25%;
+}
+
+.video-js.vjs-4-3 {
+  padding-top: 75%;
+}
+
+.video-js.vjs-fill {
+  @include sq-dimen(100%);
+}
+
+.video-js .vjs-tech {
+  @include absolute(0, null, 0);
+  @include sq-dimen(100%);
+}
+
+body.vjs-full-window {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.vjs-full-window .video-js.vjs-fullscreen {
+  @include fixed(0, 0, 0, 0);
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.video-js.vjs-fullscreen {
+  width: 100% !important;
+  height: 100% !important;
+  padding-top: 0 !important;
+  background-color: #000;
+}
+
+.video-js.vjs-fullscreen.vjs-user-inactive {
+  cursor: none;
+}
+
+.vjs-hidden {
+  display: none !important;
+}
+
+.vjs-disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.video-js .vjs-offscreen {
+  @include absolute(0, null, -9999px);
+  @include sq-dimen(1px);
+}
+
+.video-js .vjs-control-text {
+  @include absolute();
+  @include sq-dimen(1px);
+
+  border: 0;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+  padding: 0;
+}
+
+.vjs-controls-disabled .vjs-big-play-button,
+.vjs-has-started .vjs-big-play-button,
+.vjs-using-native-controls .vjs-big-play-button,
+.vjs-error .vjs-big-play-button {
+  display: none;
+}
+
+.vjs-has-started.vjs-paused.vjs-show-big-play-button-on-pause .vjs-big-play-button {
+  display: block;
+}
+
+.vjs-resize-manager {
+  @include absolute(0, null, 0);
+  @include sq-dimen(100%);
+  border: none;
+  visibility: hidden;
+  z-index: -1;
+}
+
+.vjs-spacer {
+  flex-grow: 1;
+}

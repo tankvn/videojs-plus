@@ -1,4 +1,5 @@
 import videojs from 'video.js';
+import './player.scss';
 
 const { IS_IPHONE, IOS_VERSION, TOUCH_ENABLED } = videojs.browser;
 
