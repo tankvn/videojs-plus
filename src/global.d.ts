@@ -1,5 +1,7 @@
 // eslint-disable-next-line
-import videojs from 'video.js';
+import * as originVideojs from 'video.js';
+
+declare global {}
 
 declare module 'video.js' {
   interface VideoJsPlayerOptions {
@@ -8,7 +10,7 @@ declare module 'video.js' {
     title?: string;
   }
 
-  interface VideoJsPlayer {
+  export interface VideoJsPlayer {
     cache_: { [key: string]: any };
   }
 }

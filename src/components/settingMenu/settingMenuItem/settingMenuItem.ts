@@ -9,10 +9,12 @@ interface Options extends videojs.ComponentOptions {
   menu: SettingMenu;
 }
 
+export interface SettingMenuItemOptions extends Options {}
+
 export class SettingMenuItem extends MenuItem {
   menu: SettingMenu;
 
-  options_: Options;
+  options_!: Options;
 
   constructor(player: VideoJsPlayer, options: Options) {
     super(

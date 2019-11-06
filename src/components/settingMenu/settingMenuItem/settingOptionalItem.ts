@@ -1,138 +1,154 @@
-// import videojs from 'video.js';
+import videojs from 'video.js';
 
-// import { SettingMenuItem } from './SettingMenuItem.js';
-// import { SettingSubOptionTitle } from './SettingSubOptionTitle.js';
-// import { SettingSubOptionItem } from './SettingSubOptionItem.js';
-// import { getMenuDimension } from '../MenuDimension';
+import { SettingMenuItem, SettingMenuItemOptions } from './SettingMenuItem.js';
+import { SettingSubOptionTitle } from './SettingSubOptionTitle.js';
+import { SettingSubOptionItem } from './SettingSubOptionItem.js';
+import { getMenuDimension } from '../MenuDimension';
 
-// interface Options {
-//   entries: string[];
-// }
+interface Entry {
+  value: string;
+  label: string;
+  defalut?: boolean;
+  index: number;
+}
 
-// function parseEntries(entries: Options['entries']) {
-//   let selected;
+interface Options extends SettingMenuItemOptions {
+  entries: Array<Omit<Entry, 'index'> | string>;
+}
 
-//   entries = entries.map((data_, index) => {
-//     let data = {} as { value: string; label: string };
-//     if (data_ !== null && typeof data_ !== 'object') {
-//       data = {
-//         value: data_,
-//         label: data_
-//       };
-//     }
+function parseEntries(entries: Options['entries']) {
+  let selected;
 
-//     const isDefault = typeof data.defalut !== 'undefined' ? data.defalut : false;
+  entries = entries.map((item, index) => {
+    let entry =
+      typeof item === 'string'
+        ? {
+            value: item,
+            label: item,
+            defalut: false,
+            index
+          }
+        : {
+            ...item,
+            index,
+            defalut: item.defalut || false
+          };
 
-//     const entry = {
-//       ...data,
-//       index,
-//       defalut: isDefault
-//     };
+    if (entry.defalut) {
+      selected = entry;
+    }
 
-//     if (isDefault) {
-//       selected = entry;
-//     }
+    return entry;
+  });
 
-//     return entry;
-//   });
+  if (!selected) {
+    selected = entries[0];
+  }
 
-//   if (!selected) {
-//     selected = entries[0];
-//   }
+  return {
+    entries,
+    selected
+  };
+}
 
-//   return {
-//     entries,
-//     selected
-//   };
-// }
+class SettingOptionItem extends SettingMenuItem {
+  name_!: string;
 
-// class SettingOptionItem extends SettingMenuItem {
-//   constructor(player, options = {}) {
-//     super(player, options);
+  options_!: Options;
 
-//     this.setEntries(this.options_.entries);
+  entries: Entry[] = [];
 
-//     if (!this.entries.length) {
-//       this.hide();
-//     }
-//   }
+  selectedValueEl!: Element;
 
-//   createEl() {
-//     const { icon, label } = this.options_;
-//     const el = videojs.dom.createEl('li', {
-//       className: 'vjs-menu-item vjs-setting-menu-item',
-//       innerHTML: `
-//         <div class="vjs-icon-placeholder ${icon || ''}"></div>
-//         <div class="vjs-setting-menu-label">${this.localize(label)}</div>
-//         <div class="vjs-spacer"></div>
-//       `
-//     });
+  subMenuItems: Array<SettingSubOptionTitle | SettingSubOptionItem> = [];
 
-//     this.selectedValueEl = videojs.dom.createEl('div', {
-//       className: 'vjs-setting-menu-value'
-//     });
+  constructor(player: videojs.Player, options: Options) {
+    super(player, options);
 
-//     el.appendChild(this.selectedValueEl);
+    this.setEntries(this.options_.entries);
 
-//     return el;
-//   }
+    if (!this.entries.length) {
+      this.hide();
+    }
+  }
 
-//   setEntries(entries_ = []) {
-//     Object.assign(this, parseEntries(entries_));
+  createEl() {
+    const { icon, label } = this.options_;
+    const el = videojs.dom.createEl('li', {
+      className: 'vjs-menu-item vjs-setting-menu-item',
+      innerHTML: `
+        <div class="vjs-icon-placeholder ${icon || ''}"></div>
+        <div class="vjs-setting-menu-label">${this.localize(label)}</div>
+        <div class="vjs-spacer"></div>
+      `
+    });
 
-//     this.updateSelectedValue();
+    this.selectedValueEl = videojs.dom.createEl('div', {
+      className: 'vjs-setting-menu-value'
+    });
 
-//     const SubOptionItem = videojs.getComponent(`${this.name_}Child`) || SettingSubOptionItem;
+    el.appendChild(this.selectedValueEl);
 
-//     this.subMenuItems = this.entries.map(({ label, value }) => {
-//       return new SubOptionItem(this.player_, {
-//         label,
-//         value,
-//         parent: this,
-//         menu: this.menu
-//       });
-//     });
+    return el as HTMLLIElement;
+  }
 
-//     this.subMenuItems.splice(
-//       0,
-//       0,
-//       new SettingSubOptionTitle(this.player_, {
-//         label: this.options_.label,
-//         menu: this.menu
-//       })
-//     );
-//   }
+  setEntries(entries_: Options['entries'] = []) {
+    Object.assign(this, parseEntries(entries_));
 
-//   handleClick() {
-//     const dimensions = getMenuDimension(this.player_, this.subMenuItems);
+    this.updateSelectedValue();
 
-//     this.menu.update(this.subMenuItems);
-//     this.menu.resize(dimensions);
-//   }
+    const SubOptionItem: typeof SettingSubOptionItem =
+      (videojs.getComponent(`${this.name_}Child`) as any) || SettingSubOptionItem;
 
-//   update({ label, value }) {
-//     this.selected = {
-//       label,
-//       value
-//     };
+    this.subMenuItems = this.entries.map(({ label, value }) => {
+      return new SubOptionItem(this.player_, {
+        label,
+        value,
+        parent: this,
+        menu: this.menu
+      });
+    });
 
-//     this.updateSelectedValue();
+    this.subMenuItems.splice(
+      0,
+      0,
+      new SettingSubOptionTitle(this.player_, {
+        label: this.options_.label,
+        menu: this.menu
+      })
+    );
+  }
 
-//     this.subMenuItems.forEach(function(item) {
-//       item.update && item.update();
-//     });
-//   }
+  handleClick() {
+    const dimensions = getMenuDimension(this.player_, this.subMenuItems);
 
-//   updateSelectedValue() {
-//     if (this.selected) {
-//       this.selectedValueEl.innerHTML = this.localize(this.selected.label);
-//     }
-//   }
+    this.menu.update(this.subMenuItems);
+    this.menu.resize(dimensions);
+  }
 
-//   show() {
-//     super.show();
-//     this.menu.reset();
-//   }
-// }
+  update({ label, value }) {
+    this.selected = {
+      label,
+      value
+    };
 
-// videojs.registerComponent('SettingOptionItem', SettingOptionItem);
+    this.updateSelectedValue();
+
+    this.subMenuItems.forEach(function(item) {
+      item.update && item.update();
+    });
+  }
+
+  updateSelectedValue() {
+    if (this.selected) {
+      this.selectedValueEl.innerHTML = this.localize(this.selected.label);
+    }
+  }
+
+  show() {
+    super.show();
+    this.menu.reset();
+  }
+}
+
+videojs.registerComponent('SettingOptionItem', SettingOptionItem);

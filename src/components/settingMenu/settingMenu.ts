@@ -10,12 +10,20 @@ interface Origin {
   height: number;
 }
 
+interface Options extends videojs.MenuOptions {
+  name: string;
+}
+
+const test: videojs.MenuOptions = {
+  name: '123123'
+};
+
 export class SettingMenu extends Menu {
   contentEl_?: HTMLElement;
 
-  origin: Origin;
+  origin!: Origin;
 
-  constructor(player, options) {
+  constructor(player: videojs.Player, options: videojs.MenuOptions) {
     super(player, {
       ...options,
       name: 'SettingMenu'
