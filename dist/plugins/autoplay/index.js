@@ -3,7 +3,7 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('video.js')) :
   typeof define === 'function' && define.amd ? define(['video.js'], factory) :
   (global = global || self, factory(global.videojs));
-}(this, function (videojs) { 'use strict';
+}(this, (function (videojs) { 'use strict';
 
   videojs = videojs && videojs.hasOwnProperty('default') ? videojs['default'] : videojs;
 
@@ -96,5 +96,5 @@
     });
   });
 
-}));
+})));
 //# sourceMappingURL=index.js.map

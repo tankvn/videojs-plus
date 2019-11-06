@@ -3,7 +3,7 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('video.js')) :
   typeof define === 'function' && define.amd ? define(['video.js'], factory) :
   (global = global || self, factory(global.videojs));
-}(this, function (videojs) { 'use strict';
+}(this, (function (videojs) { 'use strict';
 
   videojs = videojs && videojs.hasOwnProperty('default') ? videojs['default'] : videojs;
 
@@ -66,10 +66,12 @@
         } else if (evt.name === 'hls-alternate-audio') {
           _this.onAlternateAudio();
         }
-      }; // show when alternate audio detected
+      };
 
-
-      player.tech_.on('usage', onHlsUsageEvent); // unbind the callback on player dispose
+      player.ready(function () {
+        // show when alternate audio detected
+        player.tech_.on('usage', onHlsUsageEvent);
+      }); // unbind the callback on player dispose
 
       player.on('dispose', function () {
         player.tech_.off('usage', onHlsUsageEvent);
@@ -195,5 +197,5 @@
 
   videojs.registerPlugin('audio', audio);
 
-}));
+})));
 //# sourceMappingURL=index.js.map

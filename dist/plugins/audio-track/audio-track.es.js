@@ -60,10 +60,12 @@ function (_SettingOptionItem) {
       } else if (evt.name === 'hls-alternate-audio') {
         _this.onAlternateAudio();
       }
-    }; // show when alternate audio detected
+    };
 
-
-    player.tech_.on('usage', onHlsUsageEvent); // unbind the callback on player dispose
+    player.ready(function () {
+      // show when alternate audio detected
+      player.tech_.on('usage', onHlsUsageEvent);
+    }); // unbind the callback on player dispose
 
     player.on('dispose', function () {
       player.tech_.off('usage', onHlsUsageEvent);

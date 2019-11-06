@@ -3,7 +3,7 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('video.js')) :
   typeof define === 'function' && define.amd ? define(['video.js'], factory) :
   (global = global || self, factory(global.videojs));
-}(this, function (videojs) { 'use strict';
+}(this, (function (videojs) { 'use strict';
 
   videojs = videojs && videojs.hasOwnProperty('default') ? videojs['default'] : videojs;
 
@@ -113,7 +113,7 @@
         // use auto as default
         this.setEntries(entries, entries.length - 1);
         this.show();
-        this.player_.trigger('qualities', this.levels);
+        this.player_.trigger('hls-quality', this.levels);
       } else {
         this.hide();
       }
@@ -129,14 +129,15 @@
       this.levels.forEach(function (lv) {
         lv.enabled = lv.height === value || value === 'auto';
       });
-      this.player_.trigger('qualitychange', this.entries.reduce(function (acc, entry, index) {
+      this.player_.trigger('hls-qualitychange', this.entries.reduce(function (acc, entry, index) {
         if (entry.value === value) {
           var level = _this4.levels.find(function (v) {
             return v.height === value;
           }) || {};
           acc = _extends({
-            index: index
-          }, entry, {}, level);
+            index: index,
+            level: level
+          }, entry);
         }
 
         return acc;
@@ -149,5 +150,5 @@
   videojs.getComponent('SettingMenuButton').prototype.options_.entries.push('QualityHlsSettingItem');
   videojs.registerComponent('QualityHlsSettingItem', QualityHlsSettingItem);
 
-}));
+})));
 //# sourceMappingURL=index.js.map

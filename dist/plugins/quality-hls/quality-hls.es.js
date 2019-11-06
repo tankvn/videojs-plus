@@ -107,7 +107,7 @@ function (_SettingOptionItem) {
       // use auto as default
       this.setEntries(entries, entries.length - 1);
       this.show();
-      this.player_.trigger('qualities', this.levels);
+      this.player_.trigger('hls-quality', this.levels);
     } else {
       this.hide();
     }
@@ -123,14 +123,15 @@ function (_SettingOptionItem) {
     this.levels.forEach(function (lv) {
       lv.enabled = lv.height === value || value === 'auto';
     });
-    this.player_.trigger('qualitychange', this.entries.reduce(function (acc, entry, index) {
+    this.player_.trigger('hls-qualitychange', this.entries.reduce(function (acc, entry, index) {
       if (entry.value === value) {
         var level = _this4.levels.find(function (v) {
           return v.height === value;
         }) || {};
         acc = _extends({
-          index: index
-        }, entry, {}, level);
+          index: index,
+          level: level
+        }, entry);
       }
 
       return acc;
