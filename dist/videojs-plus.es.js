@@ -472,12 +472,19 @@ function (_Menu) {
     this.el_.style.left = x + 'px';
   };
 
-  _proto.onContextmenu = function onContextmenu(evt) {
-    evt.preventDefault();
+  _proto.onContextmenu = function onContextmenu(event) {
+    event.preventDefault();
     var rect = this.player_.el().getBoundingClientRect();
-    var x = evt.pageX - rect.x;
-    var y = evt.pageY - rect.y;
-    this.show(x, y);
+    var pageX = event.pageX,
+        pageY = event.pageY;
+
+    if (pageY > rect.y && pageY - rect.height < rect.y && pageX > rect.x && pageX - rect.width < rect.x) {
+      var x = pageX - rect.x;
+      var y = pageY - rect.y;
+      this.show(x, y);
+    } else {
+      this.hide();
+    }
   };
 
   _proto.handleClick = function handleClick(evt) {
