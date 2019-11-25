@@ -42,5 +42,8 @@
     "video.js": "^7.6.0",
     "videojs-contrib-quality-levels": "^2.0.9",
     "videojs-plus-font": "Pong420/font#af50d0e"
+  },
+  "dependencies": {
+    "videojs-plus": "^1.5.7"
   }
 }
