@@ -17,6 +17,7 @@ VideoJS Plus is an extension and skin for [video.js](https://github.com/videojs/
 ```bash
 npm install videojs-plus
 # or
+npm install -g yarn
 yarn add videojs-plus
 npm run build
 ```
